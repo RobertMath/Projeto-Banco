@@ -2,21 +2,29 @@ package conta;
 
 import java.util.Scanner;
 import conta.util.Cores;
-import conta.model.Conta;
+import conta.model.ContaCorrente;
+import conta.model.ContaPoupanca;
 
 public class Menu {
 
 	public static void main(String[] args) {
+
 		
-		//testando classe conta
-		Conta conta1 = new Conta(150798,007,1,"Robert Matheus",10000.00f);
-		conta1.visualizar();
-		conta1.sacar(12000f);
-		conta1.visualizar();
-		conta1.depositar(5000f);
-		conta1.visualizar();
-		
-		
+		// teste classe conta corrente
+		ContaCorrente cc1 = new ContaCorrente(2, 123, 1, "Godofredo Fernandes", 15000.0f, 1000.0f);
+		cc1.visualizar();
+		cc1.sacar(12000.0f);
+		cc1.visualizar();
+		cc1.depositar(5000.0f);
+		cc1.visualizar();
+		// teste classe conta poupanca
+		ContaPoupanca cp1 = new ContaPoupanca(3, 123, 2, "Frederico Evandro", 100000.0f, 15);
+		cp1.visualizar();
+		cp1.sacar(1000.0f);
+		cp1.visualizar();
+		cp1.depositar(5000.0f);
+		cp1.visualizar();
+
 		Scanner scanner = new Scanner(System.in);
 
 		int opcao;
@@ -106,7 +114,8 @@ public class Menu {
 		case 7:
 			print("                                                     ");
 			print("Depósito                                             ");
-			print("                                                     ");			break;
+			print("                                                     ");
+			break;
 		case 8:
 			print("                                                     ");
 			print("Transferência entre Contas                           ");
