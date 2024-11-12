@@ -4,9 +4,8 @@ public class ContaCorrente extends Conta {
 
 	private float limite;
 
-	public ContaCorrente(int numero_conta, int agencia_conta, int tipo_conta, String nome_titular, float saldo_conta,
-			float limite) {
-		super(numero_conta, agencia_conta, tipo_conta, nome_titular, saldo_conta);
+	public ContaCorrente(int numero, int agencia, int tipo, String titular, float saldo, float limite) {
+		super(numero, agencia, tipo, titular, saldo);
 		this.limite = limite;
 	}
 
@@ -21,12 +20,12 @@ public class ContaCorrente extends Conta {
 	@Override
 	public boolean sacar(float valor) {
 
-		if (this.getSaldo_conta() + this.getLimite() < valor) {
+		if (this.getSaldo() + this.getLimite() < valor) {
 			print("\nSaldo Insuficiente");
 			return false;
 		}
 
-		this.setSaldo_conta(this.getSaldo_conta() - valor);
+		this.setSaldo(this.getSaldo() - valor);
 		return true;
 	}
 
