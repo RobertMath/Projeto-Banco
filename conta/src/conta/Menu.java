@@ -17,24 +17,24 @@ public class Menu {
 
 		Scanner scanner = new Scanner(System.in);
 
-		int opcao, numero, agencia, tipo, aniversario;
+		int opcao, numero, agencia, tipo, aniversario, numeroDestino;
 		String titular;
-		float saldo, limite;
-		
+		float saldo, limite, valor = 0;
+
 		print("\nCriar Contas\n");
-		
+
 		ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 123, 1, "Frederico Evandro", 1000f, 100.0f);
 		contas.cadastrar(cc1);
-		
+
 		ContaCorrente cc2 = new ContaCorrente(contas.gerarNumero(), 321, 1, "Maria Bonita", 2000f, 100.0f);
 		contas.cadastrar(cc2);
-		
+
 		ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 213, 2, "Everaldo Tavares", 4000f, 12);
 		contas.cadastrar(cp1);
-		
+
 		ContaPoupanca cp2 = new ContaPoupanca(contas.gerarNumero(), 652, 2, "Godofredo Junior", 8000f, 15);
 		contas.cadastrar(cp2);
-		
+
 		contas.listarTodas();
 
 		while (true) {
@@ -120,36 +120,118 @@ public class Menu {
 				print("                                                     ");
 				print("Consultar dados da Conta - por número                ");
 				print("                                                     ");
+				print("Digite o número da conta:                            ");
+				numero = scanner.nextInt();
+				contas.procurarPorNumero(numero);
 				KeyPress();
 				break;
 			case 4:
 				print("                                                     ");
 				print("Atualizar dados da Conta                             ");
 				print("                                                     ");
+				print("Digite o numero da Conta: ");
+				numero = scanner.nextInt();
+
+				var buscaConta = contas.buscarNaCollection(numero);
+
+				if (buscaConta != null) {
+
+					tipo = buscaConta.getTipo();
+
+					print("Digite o numero da Agência                           ");
+					agencia = scanner.nextInt();
+					print("Digite o nomedo Titular:                             ");
+					scanner.skip("\\R?");
+					titular = scanner.nextLine();
+
+					print("Digite o Saldo da Conta (R$):                        ");
+					saldo = scanner.nextFloat();
+
+					switch (tipo) {
+					case 1 -> {
+						print("Digite o limite do Crédito (R$): ");
+						limite = scanner.nextFloat();
+
+						contas.atualizar(new ContaCorrente(numero, agencia, tipo, titular, saldo, limite));
+
+					}
+					case 2 -> {
+						print("Digite o dia do Aniversario da Conta:                ");
+						aniversario = scanner.nextInt();
+
+						contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
+					}
+					default -> {
+						print("Tipo de conta inválida!");
+					}
+
+					}
+
+				} else {
+					print("A conta não foi encontrada!");
+				}
+
 				KeyPress();
 				break;
 			case 5:
 				print("                                                     ");
 				print("Apagar a Conta                                       ");
 				print("                                                     ");
+				print("Digite o número da conta:                            ");
+				numero = scanner.nextInt();
+
+				contas.deletar(numero);
+
 				KeyPress();
 				break;
 			case 6:
 				print("                                                     ");
 				print("Saque                                                ");
 				print("                                                     ");
+				print("Digite o Numero da conta:                            ");
+				numero = scanner.nextInt();
+
+				do {
+					print("Digite o Valor do Saque (R$):                    ");
+					valor = scanner.nextFloat();
+				} while (valor <= 0);
+
+				contas.sacar(numero, valor);
+
 				KeyPress();
 				break;
 			case 7:
 				print("                                                     ");
 				print("Depósito                                             ");
 				print("                                                     ");
+				print("Digite o Numero da Conta:                            ");
+				numero = scanner.nextInt();
+
+				do {
+					print("Digite o Valor do Depósito (R$):                 ");
+					valor = scanner.nextFloat();
+				} while (valor <= 0);
+				
+				contas.depositar(numero, valor);
+
 				KeyPress();
 				break;
 			case 8:
 				print("                                                     ");
 				print("Transferência entre Contas                           ");
 				print("                                                     ");
+				print("Digite o Numero da Conta de Origem:                  ");
+				numero = scanner.nextInt();
+				print("Digite o Numero da Conta de Destino:                 ");
+				numeroDestino = scanner.nextInt();
+				
+				do {
+					print("Digite o Valor da Transferência (R$): ");
+					valor = scanner.nextFloat();
+				}while(valor <= 0);
+					
+				contas.transferir(numero, numeroDestino, valor);
+				
 				KeyPress();
 				break;
 			default:
